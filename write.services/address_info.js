@@ -1,7 +1,7 @@
 /**
  * Created by KP_TerminalUser2 on 02/10/2014.
  */
-var _ = require('lodash');
+
 var patientSchema = require('../models/patient_model');
 var AddressInfo = require('../dto/address_info');
 
@@ -25,7 +25,7 @@ exports.create = function(args, next){
     });
 };
 
-exports.delete = function(args, next){
+exports.remove = function(args, next){
     patientSchema.findOne({_id:args.patient._id}, function(err, doc){
         if(err){
             return next(err, null);
@@ -45,24 +45,24 @@ exports.delete = function(args, next){
 };
 
 
-//exports.update = function(args, next){
-//    var addressInfo  = AddressInfo(args);
-//    patientSchema.findOne({_id: args.patient._id}, function(err, doc){
-//        if(err){
-//            next(err, null);
-//        }
-//        if(doc){
-//            doc.address_info.push(args._id,addressInfo);
-//            doc.save(function(err,result){
-//                if(err){
-//                    next(err,null);
-//                }
-//                if(result){
-//                    next(null,result);
-//                }
-//            });
-//        }
-//    });
-//};
+exports.update = function(args, next){
+    var addressInfo  = AddressInfo(args);
+    patientSchema.findOne({_id: args.patient._id}, function(err, doc){
+        if(err){
+            next(err, null);
+        }
+        if(doc){
+            doc.address_info.id(args._id).set(addressInfo);
+            doc.save(function(err,result){
+                if(err){
+                    next(err,null);
+                }
+                if(result){
+                    next(null,result);
+                }
+            });
+        }
+    });
+};
 
 
