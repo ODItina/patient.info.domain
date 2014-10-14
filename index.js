@@ -1,28 +1,39 @@
 /**
  * Created by KP_TerminalUser2 on 02/10/2014.
  */
-var patient_read = require('./read.services/patient');
-var patient_write = require('./write.services/patient');
 
-var patient = require('./dto/patient');
-var address_info = require('./dto/address_info');
-var phone_contact = require('./dto/phone_contact');
-var contact_person = require('./dto/contact_person');
+var _ = require('lodash');
+
+var patient = require('./dtos/patient'),
+    addressInfo = require('./dtos/addressinfo'),
+    phoneContact = require('./dtos/phonecontact'),
+    contactPerson = require('./dtos/contactperson'),
+    drugAllergy = require('./dtos/drugallergy'),
+    medicalHistory = require('./dtos/medicalhistory'),
+    pregnancyInfo = require('./dtos/pregnancyinfo');
 
 
-exports.dto  = {
+module.exports.dto  = {
     patient: patient,
-    address_info:address_info,
-    phone_contact:phone_contact,
-    contact_person:contact_person
+    addressInfo:addressInfo,
+    phoneContact:phoneContact,
+    contactPerson:contactPerson,
+    drugAllergy:drugAllergy,
+    medicalHistory:medicalHistory,
+    pregnancyInfo:pregnancyInfo
 };
 
-exports.patient_service = {
-    read_service:patient_read,
-    write_service:patient_write
-};
+module.exports.read = _.extend(
+    require('./read.services/patient.read.service')
+);
 
-exports.phone_contact_service = require('./write.services/phone_contact');
-exports.address_info_service = require('./write.services/address_info');
-exports.contact_person_service = require('./write.services/contact_person');
+module.exports.write = _.extend(
+    require('./write.services/patient.write.service'),
+    require('./write.services/phonecontact.write.service'),
+    require('./write.services/addressinfo.write.service'),
+    require('./write.services/contactperson.write.service'),
+    require('./write.services/drugallergy.write.service'),
+    require('./write.services/medicalhistory.write.service'),
+    require('./write.services/pregnancyinfo.write.service')
+);
 

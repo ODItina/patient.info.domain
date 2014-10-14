@@ -1,9 +1,9 @@
 /**
  * Created by KP_TerminalUser2 on 02/10/2014.
  */
-var patientSchema = require('../models/patient_model');
+var patientSchema = require('../models/patient.model');
 
-exports.get = function(args, next){
+exports.getPatient = function(args, next){
     patientSchema.findOne({_id:args._id}, function(err, result){
         if(err){
             return next(err, null);
@@ -14,7 +14,7 @@ exports.get = function(args, next){
     });
 };
 
-exports.getAll = function(args, next){
+exports.getPatients = function(args, next){
     patientSchema.find({}, function(err, result){
         if(err){
             return next(err, null);

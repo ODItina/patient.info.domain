@@ -5,7 +5,11 @@ var mongoose = require('mongoose');
 
 var phoneContactSchema = mongoose.Schema({
 
-    phone_number: {type: String}
+    phone_number: {
+        type: String,
+        required:'Please enter patient phone number',
+        trim:true
+    }
 
 });
 module.exports =  phoneContactSchema;

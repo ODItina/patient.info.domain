@@ -2,17 +2,17 @@
  * Created by KP_TerminalUser2 on 02/10/2014.
  */
 
-var patientSchema = require('../models/patient_model');
-var ContactPerson = require('../dto/contact_person');
+var Patient = require('../models/patient.model');
 
-exports.create = function(args, next){
-    var contactPerson  = new ContactPerson(args);
-    patientSchema.findOne({_id: args.patient._id}, function(err, doc){
+
+//Create sub doc
+exports.createAddressInfo = function(args, next){
+    Patient.findOne({_id: args.patient._id}, function(err, doc){
         if(err){
             next(err, null);
         }
         if(doc){
-            doc.contact_person.push(contactPerson);
+            doc.address_info.push(args);
             doc.save(function(err,result){
                 if(err){
                     next(err,null);
@@ -25,13 +25,15 @@ exports.create = function(args, next){
     });
 };
 
-exports.remove = function(args, next){
-    patientSchema.findOne({_id:args.patient._id}, function(err, doc){
+
+//Delete Sub doc
+exports.removeAddressInfo = function(args, next){
+    Patient.findOne({_id:args.patient._id}, function(err, doc){
         if(err){
             return next(err, null);
         }
         if(doc){
-            doc.contact_person.id(args._id).remove();
+            doc.address_info.id(args._id).remove();
             doc.save(function(err){
                 if(err){
                     return next(err, null);
@@ -44,14 +46,14 @@ exports.remove = function(args, next){
     });
 };
 
-exports.update = function(args, next){
-    var contactPerson  = ContactPerson(args);
-    patientSchema.findOne({_id: args.patient._id}, function(err, doc){
+//Update sub doc
+exports.updateAddressInfo = function(args, next){
+    Patient.findOne({_id: args.patient._id}, function(err, doc){
         if(err){
             next(err, null);
         }
         if(doc){
-            doc.contact_person.id(args._id).set(contactPerson);
+            doc.address_info.id(args._id).set(args);
             doc.save(function(err,result){
                 if(err){
                     next(err,null);
@@ -63,3 +65,5 @@ exports.update = function(args, next){
         }
     });
 };
+
+

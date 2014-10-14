@@ -2,17 +2,15 @@
  * Created by KP_TerminalUser2 on 02/10/2014.
  */
 
-var patientSchema = require('../models/patient_model');
-var AddressInfo = require('../dto/address_info');
+var Patient = require('../models/patient.model');
 
-exports.create = function(args, next){
-    var addressInfo  = new AddressInfo(args);
-    patientSchema.findOne({_id: args.patient._id}, function(err, doc){
+exports.createContactPerson = function(args, next){
+    Patient.findOne({_id: args.patient._id}, function(err, doc){
         if(err){
             next(err, null);
         }
         if(doc){
-            doc.address_info.push(addressInfo);
+            doc.contact_person.push(args);
             doc.save(function(err,result){
                 if(err){
                     next(err,null);
@@ -25,13 +23,13 @@ exports.create = function(args, next){
     });
 };
 
-exports.remove = function(args, next){
-    patientSchema.findOne({_id:args.patient._id}, function(err, doc){
+exports.removeContactPerson = function(args, next){
+    Patient.findOne({_id:args.patient._id}, function(err, doc){
         if(err){
             return next(err, null);
         }
         if(doc){
-            doc.address_info.id(args._id).remove();
+            doc.contact_person.id(args._id).remove();
             doc.save(function(err){
                 if(err){
                     return next(err, null);
@@ -44,15 +42,13 @@ exports.remove = function(args, next){
     });
 };
 
-
-exports.update = function(args, next){
-    var addressInfo  = AddressInfo(args);
-    patientSchema.findOne({_id: args.patient._id}, function(err, doc){
+exports.updateContactPerson = function(args, next){
+    Patient.findOne({_id: args.patient._id}, function(err, doc){
         if(err){
             next(err, null);
         }
         if(doc){
-            doc.address_info.id(args._id).set(addressInfo);
+            doc.contact_person.id(args._id).set(args);
             doc.save(function(err,result){
                 if(err){
                     next(err,null);
@@ -64,5 +60,3 @@ exports.update = function(args, next){
         }
     });
 };
-
-
