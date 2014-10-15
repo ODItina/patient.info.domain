@@ -39,7 +39,7 @@ exports.updatePatient = function(args, next){
 
 //Delete
 
-exports.remove = function(args, next){
+exports.removePatient = function(args, next){
     Patient.remove({_id:args._id}, function(err){
         if(err){
             return next(err, false);
