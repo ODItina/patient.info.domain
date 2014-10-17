@@ -9,7 +9,7 @@ var pregnancyInfoSchema = mongoose.Schema({
         type:Date
     },
     gestation_age:{
-        type:Date
+        type:String
     },
     date_delivery_expected:{
         type:Date
