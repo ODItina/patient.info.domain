@@ -13,7 +13,7 @@ var medicalHistorySchema = mongoose.Schema({
         required:'Please enter duration of symptom'
     },
     was_hospitalized:{
-        type:Date
+        type:Boolean
     }
 });
 module.exports = medicalHistorySchema;
